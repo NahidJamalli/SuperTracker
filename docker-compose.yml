@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: "rabbitmq:3.12-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+    networks:
+      - tracker-network
+
+  supertracker-webapi:
+    image: "supertracker-web-api"
+    build:
+      context: .
+      dockerfile: SuperTracker.WebApi/Dockerfile
+    ports:
+      - "5001:5000"
+    networks:
+      - tracker-network
+    depends_on:
+      - rabbitmq
+
+  supertracker-consumer:
+    image: "track-logger"
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    build:
+      context: ./Consumer/TrackLogger
+      dockerfile: Dockerfile
+    networks:
+      - tracker-network
+    depends_on:
+      - rabbitmq
+
+networks:
+  tracker-network:
+    driver: bridge

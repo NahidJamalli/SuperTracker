@@ -1,0 +1,12 @@
+{
+    "LogConfiguration" : {
+        "LogFilePath": "/tmp/visits.log"
+    },
+    "RabbitMQ":{
+        "HostName": "rabbitmq",
+        "UserName": "guest",
+        "Password": "guest",
+        "QueueName": "SuperTracker",
+        "Port": 5672
+      }
+}

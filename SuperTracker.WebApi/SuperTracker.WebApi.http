@@ -1,0 +1,6 @@
+@SuperTracker.WebApi_HostAddress = http://localhost:5078
+
+GET {{SuperTracker.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
